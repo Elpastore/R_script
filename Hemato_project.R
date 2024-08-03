@@ -48,14 +48,14 @@ groupes_ethniques <- ethnie_blood_group_df %>%
   group_by(Ethnie)
 resultats <- groupes_ethniques %>%
   summarise(
-    freq_A = round(sum(Beth_Vincent == "A") / n(), 3),  # Calculer la fréquence phénotypique A
-    freq_B = round(sum(Beth_Vincent == "B") / n(), 3),  # Calculer la fréquence phénotypique B
-    freq_O = round(sum(Beth_Vincent == "O") / n(), 3),  # Calculer la fréquence phénotypique O
-    freq_AB = round(sum(Beth_Vincent == "AB") / n(), 3), # calculer la fréquebce phenotypique AB
-    p = round(1 - sqrt(freq_B + freq_O), 3),   # Calculer la fréquence allélique p
-    q = round(1 - sqrt(freq_A + freq_O), 3),   # Calculer la fréquence allélique q
-    r = round(1 - p - q, 3),                    # Calculer la fréquence allélique r
-    AA = round(p**2, 3),
+    freq_A = round(sum(Beth_Vincent == "A") / n(), 3),  # Calcule de la fréquence phénotypique A
+    freq_B = round(sum(Beth_Vincent == "B") / n(), 3),  # Calcule de la fréquence phénotypique B
+    freq_O = round(sum(Beth_Vincent == "O") / n(), 3),  # Calcule de la fréquence phénotypique O
+    freq_AB = round(sum(Beth_Vincent == "AB") / n(), 3), # calcule de  la fréquebce phenotypique AB
+    p = round(1 - sqrt(freq_B + freq_O), 3),   # Calcule de la fréquence allélique p
+    q = round(1 - sqrt(freq_A + freq_O), 3),   # Calcule de la fréquence allélique q
+    r = round(1 - p - q, 3),                    # Calcule de la fréquence allélique r
+    AA = round(p**2, 3),                        # Calcule de la fréquence génotypique AA
     AO = round(2 * p * r, 3),
     BB = round(q**2, 3),
     BO = round(2 * q * r, 3),
@@ -78,8 +78,8 @@ groupes_ethniques_2 <- ethnie_rhesus_df %>%
 
 resultats_2 <- groupes_ethniques_2 %>%
   summarise(
-    frequence_D = round(sum(Rhesus == "Positif") / n(), 2),  # Calculer la fréquence phénotypique D
-    frequence_d = round(sum(Rhesus == "Negatif") / n(), 2),  # Calculer la fréquence phénotypique d
+    frequence_D = round(sum(Rhesus == "Positif") / n(), 2),  # Calcule de la fréquence phénotypique D
+    frequence_d = round(sum(Rhesus == "Negatif") / n(), 2),  # Calcule de la fréquence phénotypique d
     d = round(sqrt(frequence_d), 2),
     D = round((1 - d), 2)
   )
