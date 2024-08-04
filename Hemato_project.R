@@ -28,7 +28,7 @@ levels(data_frame$Ethnie)
 # Data of ethnie and blood group
 # Install and load dplyr package
 # names(data_frame)
-# install.packages("dplyr")
+#install.packages("dplyr")
 library(dplyr)
 ethnie_blood_group_df <- select(data_frame, Region, Ethnie, Sous_Ethnie, Beth_Vincent)
 ethnie_blood_group_df
@@ -99,4 +99,79 @@ resultats_3 <- groupes_ethniques_2 %>%
     d = round(sqrt(frequence_d), 2),
     D = round((1 - d), 2)
   )
+
+#--------------------------------------------------------------# 
+# Good code for making correlation between two categorical variable
+# Point Biserial correlation
+#x: num and y: category
+# convert y to binary
+# pb = data_frame
+# pb = pb %>% mutate(
+#   y = y %>% recode("Male" = 0, "Female" = 1))
+# pbcorr <- cor(x, y)
+
+
+names(data_frame)
+
+corr_group_desease_df <- select(data_frame, 
+                              Ethnie, 
+                              DT2, 
+                              Maladie_cardiovasculaire,
+                              Lupus_erythemateux_systemique, 
+                              Dermatite_atopique, 
+                              Polyarthrite_rhumatoide,
+                              Beth_Vincent,
+                              Rhesus,
+                              Resultat)
+corr_group_desease_df <- na.omit(corr_group_desease_df)
+table <-table(corr_group_desease_df$Resultat, corr_group_desease_df$DT2)
+chisq.test(table)
+prop.test(table)
+libary(psych)
+# phi(table) # for just 2 col and 2 rows
+install.packages("lsr")
+libary(lsr)
+cramersV(table)
+# Let's apply to for all columns(next)
+#----------------------------------------------------------------------------#
+
+#summary(corr_group_desease_df$Resultat)
+
+to_test <- names(corr_group_desease_df)
+count <- 0
+for (var in to_test) {
+  count <- count + 1
+  if (var != "Resultat") {
+    tb <- table(corr_group_desease_df$Resultat, corr_group_desease_df[[var]])
+    chi2_test <- chisq.test(tb)
+    
+    if (count == 1) {
+      library(vcd)
+    }
+    print(paste(var, "test: "))
+    print(chi2_test)
+    print("------------------------")
+    #print("Correlation result: ")
+    #print(assocstats(tb)$cramersV)
+    
+  }
+}
+
+# (tb = xtabs(corr_group_desease_df$DT2 + corr_group_desease_df$Beth_Vincent))
+
+corr_group_varq <- select(data_frame,
+                          Cholesterol_LDL,
+                          Hemoglobine_HGB,
+                          Plaquettes_PLT,
+                          Beth_Vincent,
+                          Rhesus,
+                          Resultat)
+
+corr_group_varq <- na.omit(corr_group_varq)
+
+
+install.packages("psych")
+library(psych)
+point_biserial_corr <- biserial(corr_group_varq$Cholesterol_LDL, corr_group_varq$Beth_Vincent)
+
 # --------------------------------------------------------#
